@@ -1,4 +1,5 @@
 ﻿using DemoSlide5WebAPI.API.IRepository;
+using DemoSlide5WebAPI.API.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,17 @@ namespace DemoSlide5WebAPI.Controllers
             _studentRepository = studentRepository;
         }
 
+        [HttpGet]
+        public IEnumerable<Student> GetStudents() => _studentRepository.Students;
 
+        [HttpGet("{id}")]
+        public ActionResult<Student> Get(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest("Vui long nhap student can tim");
+            }
+            return Ok(_studentRepository[id]);
+        }
     }
 }
